@@ -73,6 +73,10 @@ class Database:
         async with self.pool.acquire() as conn:
             return await conn.fetchval("SELECT translation FROM words WHERE id = $1;", word_id)
 
+    async def get_word(self, word_id: int):
+        async with self.pool.acquire() as conn:
+            return await conn.fetchval("SELECT word FROM words WHERE id = $1;", word_id)
+
     async def update_priority(self, word_id: int, correct: bool):
         async with self.pool.acquire() as conn:
             row = await conn.fetchrow("SELECT priority FROM words WHERE id = $1;", word_id)
